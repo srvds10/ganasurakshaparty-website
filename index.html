@@ -117,6 +117,12 @@
 
     footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; text-align: center; }
     footer p { margin: 4px 0; }
+    .social { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px; }
+    .social a {
+      padding: 6px 16px; border: 1px solid var(--line); border-radius: 999px;
+      color: var(--brand); font-weight: 600; text-decoration: none;
+    }
+    .social a:hover { background: var(--bg-soft); }
   </style>
 </head>
 <body>
@@ -205,8 +211,10 @@
              <a href="mailto:ganasurakshaparty@gmail.com">ganasurakshaparty@gmail.com</a></p>
         </div>
         <div class="card">
-          <strong>Facebook</strong>
-          <p><a href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">facebook.com/GanaSurakshaParty</a></p>
+          <strong>Follow Us</strong>
+          <p>Facebook: <a href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">GanaSurakshaParty</a><br>
+             X (Twitter): <a href="https://x.com/GanaSuraksha" target="_blank" rel="noopener">@GanaSuraksha</a><br>
+             YouTube: <a href="https://www.youtube.com/@ganasurakshaparty3954" target="_blank" rel="noopener">@ganasurakshaparty3954</a></p>
         </div>
       </div>
     </div>
@@ -215,6 +223,11 @@
 
 <footer>
   <div class="wrap">
+    <nav class="social" aria-label="Social media">
+      <a href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://x.com/GanaSuraksha" target="_blank" rel="noopener">X</a>
+      <a href="https://www.youtube.com/@ganasurakshaparty3954" target="_blank" rel="noopener">YouTube</a>
+    </nav>
     <p>&copy; <span id="y">2026</span> Gana Suraksha Party. All rights reserved.</p>
     <p>Reg. No. 56/309/2019-20/PPS-1</p>
   </div>
