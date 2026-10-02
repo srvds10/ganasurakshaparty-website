@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gana Suraksha Party</title>
+  <meta name="description" content="Official website of the Gana Suraksha Party (GSP), a registered political party with its head office at Tamulpur, Assam.">
+  <meta property="og:title" content="Gana Suraksha Party (GSP)">
+  <meta property="og:description" content="Official website of the Gana Suraksha Party, Tamulpur, Assam.">
+  <meta property="og:url" content="https://ganasurakshaparty.org/">
+  <meta property="og:image" content="https://ganasurakshaparty.org/og.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Party colours, taken from the GSP flag */
+    :root {
+      --green: #1ea757;
+      --green-dark: #0f6b35;
+      --yellow: #f6ee1f;
+
+      --brand: var(--green-dark);
+      --bg: #ffffff;
+      --bg-soft: #f3f8f4;
+      --text: #17221b;
+      --muted: #4f5f55;
+      --line: #dbe7de;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --brand: #4fd187;
+        --bg: #0f1511; --bg-soft: #161f19; --text: #e7efe9;
+        --muted: #a2b3a8; --line: #27342b;
+      }
+    }
+    :root[data-theme="dark"] {
+      --brand: #4fd187;
+      --bg: #0f1511; --bg-soft: #161f19; --text: #e7efe9;
+      --muted: #a2b3a8; --line: #27342b;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: "Noto Sans", system-ui, sans-serif; line-height: 1.6;
+    }
+    .hi { font-family: "Noto Sans Devanagari", "Noto Sans", sans-serif; }
+    a { color: var(--brand); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+    /* Flag stripe */
+    .stripe { height: 6px; background: linear-gradient(to right, var(--yellow) 0 33.3%, #fff 33.3% 66.6%, var(--green) 66.6%); }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; }
+    .logo img { width: 40px; height: 40px; border-radius: 50%; }
+    .nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    .nav ul a { color: var(--text); text-decoration: none; font-weight: 600; font-size: 15px; }
+    .nav ul a:hover { color: var(--brand); }
+    @media (max-width: 720px) { .nav ul { display: none; } }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(160deg, var(--green) 0%, var(--green-dark) 100%);
+      color: #fff; padding: 64px 0 72px; text-align: center;
+    }
+    .hero img.emblem {
+      width: 168px; height: 168px; border-radius: 50%; background: #fff; padding: 4px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25); margin-bottom: 22px;
+    }
+    .hero .hi { font-size: clamp(24px, 4.5vw, 34px); margin: 0 0 2px; }
+    .hero h1 { font-size: clamp(32px, 7vw, 58px); line-height: 1.1; margin: 0 0 14px; font-weight: 800; letter-spacing: .5px; }
+    .hero p.tag { font-size: clamp(16px, 2.2vw, 19px); max-width: 640px; margin: 0 auto 30px; opacity: .95; }
+    .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 13px 26px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 16px; }
+    .btn-primary { background: var(--yellow); color: #1d1b00; }
+    .btn-ghost { border: 2px solid rgba(255,255,255,.85); color: #fff; }
+
+    /* Sections */
+    section { padding: 68px 0; }
+    section.soft { background: var(--bg-soft); }
+    h2 { font-size: clamp(26px, 4vw, 34px); margin: 0 0 14px; }
+    .lead { color: var(--muted); font-size: 18px; max-width: 760px; margin: 0; }
+    .facts { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 32px; }
+    .card { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+    .card .label { font-size: 13px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); font-weight: 600; }
+    .card .value { font-weight: 700; font-size: 17px; margin-top: 4px; overflow-wrap: anywhere; }
+
+    /* Leader */
+    .leader { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .leader .badge {
+      width: 88px; height: 88px; border-radius: 50%; flex: none; display: grid; place-items: center;
+      background: var(--green-dark); color: #fff; font-size: 30px; font-weight: 800;
+      border: 4px solid var(--yellow);
+    }
+    .leader h3 { margin: 0; font-size: 24px; }
+    .leader .role { color: var(--brand); font-weight: 700; }
+    .leader p { margin: 2px 0 0; color: var(--muted); }
+
+    /* Join */
+    .join {
+      background: linear-gradient(160deg, var(--green) 0%, var(--green-dark) 100%);
+      color: #fff; border-radius: 18px; padding: 44px 24px; text-align: center;
+    }
+    .join h2 { color: inherit; }
+    .join p { max-width: 600px; margin: 0 auto 24px; opacity: .95; }
+
+    /* Contact */
+    .contact { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 28px; }
+    .contact .card p { margin: 6px 0 0; color: var(--muted); }
+    .contact .card strong { font-size: 17px; }
+
+    footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; text-align: center; }
+    footer p { margin: 4px 0; }
+  </style>
+</head>
+<body>
+
+<div class="stripe"></div>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><img src="logo.png" alt="">Gana Suraksha Party</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#join">Join</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <img class="emblem" src="logo.png" alt="Gana Suraksha Party (GSP) emblem with the torch symbol">
+      <p class="hi" lang="hi">गण सुरक्षा पार्टी</p>
+      <h1>Gana Suraksha Party</h1>
+      <p class="tag">A registered political party of Assam &middot; Head Office: Tamulpur</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#join">Join the Party</a>
+        <a class="btn btn-ghost" href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">Follow on Facebook</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About Us</h2>
+      <p class="lead">
+        Gana Suraksha Party (GSP) is a registered political party with its head office at
+        Tamulpur, Assam. The party is led by its President, Naba Kumar Sarania, former
+        Member of Parliament (Lok Sabha) from Kokrajhar. The party's election symbol is the torch.
+      </p>
+      <div class="facts">
+        <div class="card"><div class="label">Registration No.</div><div class="value">56/309/2019-20/PPS-1</div></div>
+        <div class="card"><div class="label">Head Office</div><div class="value">Tamulpur, Assam</div></div>
+        <div class="card"><div class="label">Party Symbol</div><div class="value">Torch</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="leadership" class="soft">
+    <div class="wrap">
+      <h2>Leadership</h2>
+      <div class="card leader">
+        <div class="badge" aria-hidden="true">NKS</div>
+        <div>
+          <h3>Naba Kumar Sarania</h3>
+          <div class="role">President</div>
+          <p>Ex-MP (Lok Sabha), Kokrajhar, Assam</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="wrap">
+      <div class="join">
+        <h2>Join Us</h2>
+        <p>Want to become a member or volunteer with Gana Suraksha Party? Write to us or send us a message on Facebook, and our team will get in touch.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="mailto:contact@ganasurakshaparty.org?subject=I%20want%20to%20join%20Gana%20Suraksha%20Party">Email Us</a>
+          <a class="btn btn-ghost" href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">Message on Facebook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="soft">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <div class="contact">
+        <div class="card">
+          <strong>Head Office</strong>
+          <p>Vill: Dighilipar, Sub Division/PO/PS: Tamulpur,<br>Dist: Tamulpur, Assam &ndash; 781367</p>
+        </div>
+        <div class="card">
+          <strong>Email</strong>
+          <p><a href="mailto:contact@ganasurakshaparty.org">contact@ganasurakshaparty.org</a><br>
+             <a href="mailto:ganasurakshaparty@gmail.com">ganasurakshaparty@gmail.com</a></p>
+        </div>
+        <div class="card">
+          <strong>Facebook</strong>
+          <p><a href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">facebook.com/GanaSurakshaParty</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; <span id="y">2026</span> Gana Suraksha Party. All rights reserved.</p>
+    <p>Reg. No. 56/309/2019-20/PPS-1</p>
+  </div>
+</footer>
+<div class="stripe"></div>
+
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
