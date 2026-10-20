@@ -292,7 +292,9 @@
         <div class="card">
           <strong>Email</strong>
           <p><a href="mailto:ganasurakshaparty@gmail.com" data-gmail>ganasurakshaparty@gmail.com</a>
-             <button type="button" class="copy-email" data-copy="ganasurakshaparty@gmail.com">Copy</button></p>
+             <button type="button" class="copy-email" data-copy="ganasurakshaparty@gmail.com">Copy</button><br>
+             <a href="mailto:contact@ganasurakshaparty.org" data-gmail>contact@ganasurakshaparty.org</a>
+             <button type="button" class="copy-email" data-copy="contact@ganasurakshaparty.org">Copy</button></p>
         </div>
         <div class="card">
           <strong>Follow Us</strong>
@@ -323,11 +325,11 @@
   // Email links: phones open the mail app (mailto:). On computers mailto: often does nothing
   // because no mail app is set up, so open Gmail's compose window in a new tab instead.
   (function () {
-    var EMAIL = 'ganasurakshaparty@gmail.com';
     var isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
     if (!isTouch) {
       document.querySelectorAll('a[data-gmail]').forEach(function (a) {
-        var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL);
+        var to = a.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+        var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to);
         if (a.dataset.subject) url += '&su=' + encodeURIComponent(a.dataset.subject);
         a.href = url; a.target = '_blank'; a.rel = 'noopener';
       });
