@@ -118,6 +118,18 @@
       border-radius: 12px; overflow: hidden; background: #000; margin-top: 28px;
     }
     .video iframe, .vcard .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .featured {
+      position: relative; max-width: 720px; margin-top: 28px; border-radius: 14px; overflow: hidden;
+      border: 4px solid var(--yellow); box-shadow: 0 10px 30px rgba(0,0,0,.15); background: #000;
+    }
+    .featured .frame { position: relative; aspect-ratio: 16 / 9; }
+    .featured .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .featured-label {
+      display: inline-block; margin-top: 28px; padding: 4px 12px; border-radius: 999px;
+      background: var(--yellow); color: #1d1b00; font-weight: 700; font-size: 13px;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .featured-label + .featured { margin-top: 10px; }
     .vgrid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); margin-top: 28px; }
     .vgrid[hidden] { display: none; }
     .vcard { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
@@ -230,6 +242,15 @@
     <div class="wrap">
       <h2>Videos</h2>
       <p class="lead">Latest videos from our YouTube channel.</p>
+      <span class="featured-label">Featured</span>
+      <div class="featured" id="featured-video" data-id="SDhH4fv4Fqo">
+        <div class="frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/SDhH4fv4Fqo?rel=0"
+                  title="Featured video &ndash; Gana Suraksha Party" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
       <div class="vgrid" id="video-grid" hidden></div>
       <div class="video" id="video-fallback">
         <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUzwjceEpfVS8S34zZ4yU6yg"
@@ -303,7 +324,9 @@
     fetch('videos.json', { cache: 'no-cache' })
       .then(function (r) { return r.ok ? r.json() : []; })
       .then(function (videos) {
-        videos = (videos || []).filter(function (v) { return /^[A-Za-z0-9_-]{11}$/.test(v.id); });
+        var featured = document.getElementById('featured-video');
+        var featuredId = featured ? featured.dataset.id : '';
+        videos = (videos || []).filter(function (v) { return /^[A-Za-z0-9_-]{11}$/.test(v.id) && v.id !== featuredId; });
         if (!videos.length) return;
         videos.forEach(function (v) {
           var card = document.createElement('article'); card.className = 'vcard';
