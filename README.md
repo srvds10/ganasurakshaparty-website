@@ -16,3 +16,6 @@ The list lives in `videos.json` and is refreshed every 6 hours by the **Update Y
 GitHub Action (`.github/workflows/update-videos.yml`, which runs `scripts/update_videos.py`).
 To refresh it right away: **Actions → Update YouTube videos → Run workflow**.
 If `videos.json` is missing, the page falls back to a single channel player.
+
+A **featured video** is shown above the cards. To change it, edit the video ID in `index.html`
+(the `featured-video` block: both `data-id` and the iframe `src`). It is left out of the cards below.
