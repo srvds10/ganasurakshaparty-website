@@ -167,6 +167,10 @@
     .contact { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 28px; }
     .contact .card p { margin: 6px 0 0; color: var(--muted); }
     .contact .card strong { font-size: 17px; }
+    .copy-email {
+      margin-left: 6px; padding: 2px 10px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--bg-soft); color: var(--brand); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
 
     footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: 14px; text-align: center; }
     footer p { margin: 4px 0; }
@@ -270,7 +274,7 @@
         <h2>Join Us</h2>
         <p>Want to become a member or volunteer with Gana Suraksha Party? Write to us or send us a message on Facebook, and our team will get in touch.</p>
         <div class="btns">
-          <a class="btn btn-primary" href="mailto:contact@ganasurakshaparty.org?subject=I%20want%20to%20join%20Gana%20Suraksha%20Party">Email Us</a>
+          <a class="btn btn-primary" href="mailto:ganasurakshaparty@gmail.com?subject=I%20want%20to%20join%20Gana%20Suraksha%20Party" data-gmail data-subject="I want to join Gana Suraksha Party">Email Us</a>
           <a class="btn btn-ghost" href="https://www.facebook.com/GanaSurakshaParty/" target="_blank" rel="noopener">Message on Facebook</a>
         </div>
       </div>
@@ -287,8 +291,10 @@
         </div>
         <div class="card">
           <strong>Email</strong>
-          <p><a href="mailto:contact@ganasurakshaparty.org">contact@ganasurakshaparty.org</a><br>
-             <a href="mailto:ganasurakshaparty@gmail.com">ganasurakshaparty@gmail.com</a></p>
+          <p><a href="mailto:ganasurakshaparty@gmail.com" data-gmail>ganasurakshaparty@gmail.com</a>
+             <button type="button" class="copy-email" data-copy="ganasurakshaparty@gmail.com">Copy</button><br>
+             <a href="mailto:contact@ganasurakshaparty.org" data-gmail>contact@ganasurakshaparty.org</a>
+             <button type="button" class="copy-email" data-copy="contact@ganasurakshaparty.org">Copy</button></p>
         </div>
         <div class="card">
           <strong>Follow Us</strong>
@@ -315,6 +321,27 @@
 <div class="stripe"></div>
 
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script>
+  // Email links: phones open the mail app (mailto:). On computers mailto: often does nothing
+  // because no mail app is set up, so open Gmail's compose window in a new tab instead.
+  (function () {
+    var isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouch) {
+      document.querySelectorAll('a[data-gmail]').forEach(function (a) {
+        var to = a.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+        var url = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(to);
+        if (a.dataset.subject) url += '&su=' + encodeURIComponent(a.dataset.subject);
+        a.href = url; a.target = '_blank'; a.rel = 'noopener';
+      });
+    }
+    document.querySelectorAll('.copy-email').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var done = function () { b.textContent = 'Copied!'; setTimeout(function () { b.textContent = 'Copy'; }, 2000); };
+        if (navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy).then(done, function () {});
+      });
+    });
+  })();
+</script>
 <script>
   // Small video cards from videos.json (refreshed every 6 hours by a GitHub Action).
   // If the list isn't available, the single channel player above stays in place.
