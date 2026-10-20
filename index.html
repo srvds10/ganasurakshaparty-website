@@ -114,11 +114,40 @@
 
     /* Videos */
     .video {
-      position: relative; aspect-ratio: 16 / 9; width: 100%; max-width: 880px;
-      border-radius: 14px; overflow: hidden; background: #000; margin-top: 28px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+      position: relative; aspect-ratio: 16 / 9; width: 100%; max-width: 560px;
+      border-radius: 12px; overflow: hidden; background: #000; margin-top: 28px;
     }
-    .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video iframe, .vcard .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vgrid { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); margin-top: 28px; }
+    .vgrid[hidden] { display: none; }
+    .vcard { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .vcard .frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+    .vcard button {
+      position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0;
+      background: #000; cursor: pointer;
+    }
+    .vcard button img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .92; }
+    .vcard button:hover img { opacity: 1; }
+    .vcard .play {
+      position: absolute; left: 50%; top: 50%; width: 56px; height: 40px; transform: translate(-50%, -50%);
+      background: #e00; border-radius: 10px; display: grid; place-items: center;
+    }
+    .vcard .play::after {
+      content: ""; border-left: 15px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px;
+    }
+    .vcard .meta { padding: 10px 14px 14px; }
+    .vcard .vtitle {
+      margin: 0; font-weight: 600; font-size: 15px; line-height: 1.4;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .vcard .vdate { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    @media (max-width: 720px) {
+      .vgrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .vcard .meta { padding: 8px 10px 10px; }
+      .vcard .vtitle { font-size: 13px; }
+      .vcard .vdate { font-size: 12px; }
+      .vcard .play { width: 42px; height: 30px; }
+    }
     .videos-more { margin-top: 20px; }
     .btn-outline { border: 2px solid var(--brand); color: var(--brand); }
 
@@ -201,7 +230,8 @@
     <div class="wrap">
       <h2>Videos</h2>
       <p class="lead">Latest videos from our YouTube channel.</p>
-      <div class="video">
+      <div class="vgrid" id="video-grid" hidden></div>
+      <div class="video" id="video-fallback">
         <iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUzwjceEpfVS8S34zZ4yU6yg"
                 title="Gana Suraksha Party &ndash; latest YouTube videos" loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -264,5 +294,49 @@
 <div class="stripe"></div>
 
 <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script>
+  // Small video cards from videos.json (refreshed every 6 hours by a GitHub Action).
+  // If the list isn't available, the single channel player above stays in place.
+  (function () {
+    var grid = document.getElementById('video-grid');
+    var fallback = document.getElementById('video-fallback');
+    fetch('videos.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (videos) {
+        videos = (videos || []).filter(function (v) { return /^[A-Za-z0-9_-]{11}$/.test(v.id); });
+        if (!videos.length) return;
+        videos.forEach(function (v) {
+          var card = document.createElement('article'); card.className = 'vcard';
+          var frame = document.createElement('div'); frame.className = 'frame';
+          var btn = document.createElement('button'); btn.type = 'button';
+          btn.setAttribute('aria-label', 'Play video: ' + v.title);
+          var img = document.createElement('img');
+          img.src = 'https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg'; img.alt = ''; img.loading = 'lazy';
+          var play = document.createElement('span'); play.className = 'play';
+          btn.append(img, play); frame.append(btn);
+          btn.addEventListener('click', function () {
+            var f = document.createElement('iframe');
+            f.src = 'https://www.youtube-nocookie.com/embed/' + v.id + '?autoplay=1&rel=0';
+            f.title = v.title; f.allowFullscreen = true;
+            f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            f.referrerPolicy = 'strict-origin-when-cross-origin';
+            frame.replaceChildren(f);
+          });
+          var meta = document.createElement('div'); meta.className = 'meta';
+          var t = document.createElement('p'); t.className = 'vtitle'; t.textContent = v.title;
+          meta.append(t);
+          var d = new Date(v.published);
+          if (!isNaN(d)) {
+            var dt = document.createElement('p'); dt.className = 'vdate';
+            dt.textContent = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            meta.append(dt);
+          }
+          card.append(frame, meta); grid.append(card);
+        });
+        grid.hidden = false; fallback.remove();
+      })
+      .catch(function () {});
+  })();
+</script>
 </body>
 </html>
